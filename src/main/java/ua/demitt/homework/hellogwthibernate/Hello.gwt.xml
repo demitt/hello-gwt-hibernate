@@ -2,12 +2,19 @@
         "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
 <module>
 
-    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.user.User" />
+    <inherits name="com.google.gwt.i18n.I18N" />
     <!--<inherits name="com.google.gwt.uibinder.UiBinder"/>-->
 
     <entry-point class="ua.demitt.homework.hellogwthibernate.client.Hello"/>
 
     <source path='client' />
     <source path='shared' />
+
+    <set-configuration-property name="locale.useragent" value="Y"/>
+    <extend-property name="locale" values="en"/>
+    <extend-property name="locale" values="uk"/>
+    <extend-property name="locale" values="ru"/>
+    <!--<set-property-fallback name="locale" value="en"/>-->
 
 </module>

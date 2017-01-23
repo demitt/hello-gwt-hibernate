@@ -2,6 +2,7 @@ package ua.demitt.homework.hellogwthibernate.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
+import ua.demitt.homework.hellogwthibernate.client.ui.LoginForm;
 
 
 public class Hello implements EntryPoint {

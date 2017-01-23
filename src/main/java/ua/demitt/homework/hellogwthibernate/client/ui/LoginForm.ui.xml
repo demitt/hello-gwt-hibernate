@@ -1,0 +1,29 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+<ui:with field="i18n" type="ua.demitt.homework.hellogwthibernate.client.i18n.Constants" />
+    <g:HTMLPanel>
+        <div class="container">
+            <div class="content">
+                <h1>Login Form</h1>
+                <div id="login-form">
+                    <div>
+                        <ui:text from="{i18n.loginLogin}"/>
+                    </div>
+                    <div>
+                        <g:TextBox ui:field="login"/>
+                    </div>
+                    <div>
+                        <ui:text from="{i18n.loginPassword}"/>
+                    </div>
+                    <div>
+                        <g:PasswordTextBox ui:field="password" />
+                    </div>
+                    <div>
+                        <g:Button ui:field="loginButton" styleName="" text="{i18n.loginButton}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>
