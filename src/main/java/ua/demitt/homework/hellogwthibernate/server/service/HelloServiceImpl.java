@@ -1,6 +1,7 @@
 package ua.demitt.homework.hellogwthibernate.server.service;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import org.mindrot.jbcrypt.BCrypt;
 import ua.demitt.homework.hellogwthibernate.client.HelloService;
 import ua.demitt.homework.hellogwthibernate.server.dao.UserDao;
 import ua.demitt.homework.hellogwthibernate.server.dao.impl.UserDaoImpl;
@@ -26,12 +27,9 @@ public class HelloServiceImpl extends RemoteServiceServlet implements HelloServi
         if (user == null) {
             return emptyUser; //tmp
         }
-
-        //TODO: хеширование, сравнение...
-
-        //tmp:
-        if (user.getPassword().equals(password)) {
-            return user;
+        
+        if ( BCrypt.checkpw(password, user.getPassword()) ) {
+            return user; //tmp
         }
         return emptyUser; //tmp
     }

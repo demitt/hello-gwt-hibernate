@@ -1,7 +1,7 @@
 
 CREATE TABLE user_list (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    login CHAR(20) UNIQUE NOT NULL,
+    login CHAR(60) UNIQUE NOT NULL,
     password CHAR(200) NOT NULL,
     name CHAR(20) NOT NULL
 );
