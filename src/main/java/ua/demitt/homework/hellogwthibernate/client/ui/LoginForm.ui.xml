@@ -4,24 +4,17 @@
 <ui:with field="i18n" type="ua.demitt.homework.hellogwthibernate.client.i18n.Constants" />
     <g:HTMLPanel>
         <div class="container">
-            <div class="content">
-                <h1>Login Form</h1>
-                <div id="login-form">
-                    <div>
-                        <ui:text from="{i18n.loginLogin}"/>
-                    </div>
-                    <div>
-                        <g:TextBox ui:field="login"/>
-                    </div>
-                    <div>
-                        <ui:text from="{i18n.loginPassword}"/>
-                    </div>
-                    <div>
-                        <g:PasswordTextBox ui:field="password" />
-                    </div>
-                    <div>
-                        <g:Button ui:field="loginButton" styleName="" text="{i18n.loginButton}" />
-                    </div>
+            <div id="login-form">
+                <div>
+                    <ui:text from="{i18n.loginUser}"/>
+                    <g:TextBox ui:field="login"/>
+                </div>
+                <div>
+                    <ui:text from="{i18n.loginPassword}"/>
+                    <g:PasswordTextBox ui:field="password" />
+                </div>
+                <div>
+                    <g:Button ui:field="loginButton" text="{i18n.loginButton}" />
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ package ua.demitt.homework.hellogwthibernate.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 import ua.demitt.homework.hellogwthibernate.client.ui.LoginForm;
+import ua.demitt.homework.hellogwthibernate.shared.Const;
 
 
 public class Hello implements EntryPoint {
@@ -18,7 +19,7 @@ public class Hello implements EntryPoint {
         horizontalPanel.add(helloButton);*/
 
         //RootPanel.get("content").add(horizontalPanel);
-        RootPanel.get("content").add(loginForm);
+        RootPanel.get(Const.CONTENT_ID).add(loginForm);
         //setUpGui();
     }
 

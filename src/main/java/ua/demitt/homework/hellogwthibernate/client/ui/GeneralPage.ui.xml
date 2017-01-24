@@ -1,0 +1,12 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+<ui:with field="i18n" type="ua.demitt.homework.hellogwthibernate.client.i18n.Constants" />
+    <g:HTMLPanel>
+        <div class="">
+            <span ui:field="greeting" />
+        </div>
+        <div class="">
+            <g:Anchor ui:field="logoutLink" href="#"><ui:text from="{i18n.logoutLink}" /></g:Anchor>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

@@ -12,74 +12,98 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
 import ua.demitt.homework.hellogwthibernate.client.HelloService;
 import ua.demitt.homework.hellogwthibernate.client.HelloServiceAsync;
 import ua.demitt.homework.hellogwthibernate.client.i18n.Constants;
-import ua.demitt.homework.hellogwthibernate.shared.dto.UserDto;
+import ua.demitt.homework.hellogwthibernate.shared.Const;
+import ua.demitt.homework.hellogwthibernate.shared.response.Response;
+import ua.demitt.homework.hellogwthibernate.shared.response.ResponseCode;
+
+import java.util.Map;
 
 public class LoginForm extends PopupPanel {
 
     @UiTemplate("LoginForm.ui.xml")
     interface LoginFormUiBinder extends UiBinder<HTMLPanel, LoginForm> {  }
-
     private static LoginFormUiBinder loginFormUiBinder = GWT.create(LoginFormUiBinder.class);
 
     private Constants constants = GWT.create(Constants.class);
+    private Widget root;
 
     @UiField //(provided = true)
     Button loginButton;
-
     @UiField
     TextBox login;
-
     @UiField
     PasswordTextBox password;
 
-    //@UiField
-    //SpanElement message;
-
     private HelloServiceAsync helloService = GWT.create(HelloService.class);
-    //^ it is safe to cache the instantiated service proxy
 
 
     public LoginForm() {
         //initWidget(loginFormUiBinder.createAndBindUi(this));
 
-        //setStyleName("");
-
-        //message.setInnerHTML("Go!");
-
-        //loginButton = new Button();
-        //loginButton.setText("sommmme button");
-
-        add(loginFormUiBinder.createAndBindUi(this));
+        this.root = loginFormUiBinder.createAndBindUi(this);
+        add(this.root);
     }
 
-    @UiHandler("loginButton")   //@UiHandler({"loginButton", "btnSmth"})
+    @UiHandler("loginButton")
     void submitLoginForm(ClickEvent event) {
         AsyncCallback callback = new AsyncCallback() {
             @Override
             public void onSuccess(Object o) {
-                UserDto user = (UserDto) o;
-                Window.alert("[" + constants.greetingDay() + "] , " + user.getLogin() + "!");
+                Response response = (Response) o;
+                clearFields();
+                if (response.getCode() == ResponseCode.USER_NOT_FOUND) {
+                    return;
+                }
+
+                String greeting = createGreeting(response.getData());
+
+                GeneralPage generalPage = new GeneralPage(greeting, root);
+                RootPanel content = RootPanel.get(Const.CONTENT_ID);
+                content.clear();
+                content.add(generalPage);
             }
 
             @Override
             public void onFailure(Throwable throwable) {
-                Window.alert("Ошибка запроса: " + throwable.getClass().getName());
+                Window.alert("Error!");
             }
         };
 
-        //this.login.setText("ivan");
         String login = this.login.getText();
         String password = this.password.getText();
-        this.helloService.myMethod(login, password, callback);
+        this.helloService.login(login, password, callback);
     }
 
-    /*@UiHandler("loginButton")
-    void forBtn(MouseOverEvent event) {
-        //Window.setTitle("123");
-    }*/
 
+    private void clearFields() {
+        login.setText("");
+        password.setText("");
+    }
+
+
+    private String createGreeting(Map<String, String> data) {
+        String greeting = "";
+        switch (data.get("period")) {
+            case "MORNING":
+                greeting = constants.greetingMorning();
+                break;
+            case "DAY":
+                greeting = constants.greetingDay();
+                break;
+            case "EVENING":
+                greeting = constants.greetingEvening();
+                break;
+            case "NIGHT":
+                greeting = constants.greetingNight();
+                break;
+        }
+        greeting += ", " + data.get("name") + "!";
+        return greeting;
+    }
 }
