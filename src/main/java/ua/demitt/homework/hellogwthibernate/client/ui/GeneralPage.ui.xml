@@ -2,10 +2,10 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 <ui:with field="i18n" type="ua.demitt.homework.hellogwthibernate.client.i18n.Constants" />
     <g:HTMLPanel>
-        <div class="">
+        <div class="greeting">
             <span ui:field="greeting" />
         </div>
-        <div class="">
+        <div>
             <g:Anchor ui:field="logoutLink" href="#"><ui:text from="{i18n.logoutLink}" /></g:Anchor>
         </div>
     </g:HTMLPanel>
