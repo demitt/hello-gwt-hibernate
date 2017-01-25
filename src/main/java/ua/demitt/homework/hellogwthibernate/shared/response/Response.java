@@ -1,11 +1,10 @@
 package ua.demitt.homework.hellogwthibernate.shared.response;
 
 import java.io.Serializable;
-import java.util.Map;
 
 public class Response implements Serializable {
     private ResponseCode code;
-    private Map<String, String> data;
+    private String userName;
 
     public Response() {   }
 
@@ -13,9 +12,9 @@ public class Response implements Serializable {
         this.code = code;
     }
 
-    public Response(ResponseCode code, Map<String, String> data) {
+    public Response(ResponseCode code, String userName) {
         this.code = code;
-        this.data = data;
+        this.userName = userName;
     }
 
     public ResponseCode getCode() {
@@ -23,7 +22,7 @@ public class Response implements Serializable {
     }
 
 
-    public Map<String, String> getData() {
-        return data;
+    public String getUserName() {
+        return userName;
     }
 }

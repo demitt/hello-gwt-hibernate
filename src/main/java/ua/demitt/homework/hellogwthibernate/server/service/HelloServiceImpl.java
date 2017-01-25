@@ -9,9 +9,6 @@ import ua.demitt.homework.hellogwthibernate.shared.dto.UserDto;
 import ua.demitt.homework.hellogwthibernate.shared.response.Response;
 import ua.demitt.homework.hellogwthibernate.shared.response.ResponseCode;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class HelloServiceImpl extends RemoteServiceServlet implements HelloService {
 
     private static UserDao userDao;
@@ -24,16 +21,10 @@ public class HelloServiceImpl extends RemoteServiceServlet implements HelloServi
     public Response login(String login, String password) {
         UserDto user = userDao.findUser(login);
 
-        if (user == null) {
+        if (user == null || !BCrypt.checkpw(password, user.getPassword())) {
             return new Response(ResponseCode.USER_NOT_FOUND);
         }
-        
-        if ( BCrypt.checkpw(password, user.getPassword()) ) {
-            Map<String, String> responseData = new HashMap<>();
-            responseData.put("name", user.getName());
-            responseData.put("period", "EVENING"); //tmp
-            return new Response(ResponseCode.OK, responseData);
-        }
-        return new Response(ResponseCode.USER_NOT_FOUND);
+
+        return new Response(ResponseCode.OK, user.getName());
     }
 }

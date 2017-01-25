@@ -19,10 +19,11 @@ import ua.demitt.homework.hellogwthibernate.client.HelloService;
 import ua.demitt.homework.hellogwthibernate.client.HelloServiceAsync;
 import ua.demitt.homework.hellogwthibernate.client.i18n.Constants;
 import ua.demitt.homework.hellogwthibernate.shared.Const;
+import ua.demitt.homework.hellogwthibernate.client.Period;
 import ua.demitt.homework.hellogwthibernate.shared.response.Response;
 import ua.demitt.homework.hellogwthibernate.shared.response.ResponseCode;
 
-import java.util.Map;
+import java.util.Date;
 
 public class LoginForm extends PopupPanel {
 
@@ -61,7 +62,8 @@ public class LoginForm extends PopupPanel {
                     return;
                 }
 
-                String greeting = createGreeting(response.getData());
+                Period period = Period.getPeriod(new Date().getHours());
+                String greeting = createGreeting(response.getUserName(), period);
 
                 GeneralPage generalPage = new GeneralPage(greeting, root);
                 RootPanel content = RootPanel.get(Const.CONTENT_ID);
@@ -86,24 +88,25 @@ public class LoginForm extends PopupPanel {
         password.setText("");
     }
 
-
-    private String createGreeting(Map<String, String> data) {
-        String greeting = "";
-        switch (data.get("period")) {
-            case "MORNING":
+    private String createGreeting(String userName, Period period) {
+        String greeting;
+        switch (period) {
+            case MORNING:
                 greeting = constants.greetingMorning();
                 break;
-            case "DAY":
+            case DAY:
                 greeting = constants.greetingDay();
                 break;
-            case "EVENING":
+            case EVENING:
                 greeting = constants.greetingEvening();
                 break;
-            case "NIGHT":
+            case NIGHT:
                 greeting = constants.greetingNight();
                 break;
+            default:
+                throw new IllegalArgumentException("Unknown period");
         }
-        greeting += ", " + data.get("name") + "!";
+        greeting += ", " + userName + "!";
         return greeting;
     }
 }
