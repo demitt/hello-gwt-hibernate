@@ -11,7 +11,7 @@ import ua.demitt.homework.hellogwthibernate.shared.response.ResponseCode;
 
 public class HelloServiceImpl extends RemoteServiceServlet implements HelloService {
 
-    private static UserDao userDao;
+    static UserDao userDao; //package access for testing
 
     public HelloServiceImpl() {
         userDao = new UserDaoImpl();
