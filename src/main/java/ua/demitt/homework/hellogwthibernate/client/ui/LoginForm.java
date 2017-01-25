@@ -9,7 +9,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -28,8 +28,8 @@ import java.util.Date;
 public class LoginForm extends PopupPanel {
 
     @UiTemplate("LoginForm.ui.xml")
-    interface LoginFormUiBinder extends UiBinder<HTMLPanel, LoginForm> {  }
-    private static LoginFormUiBinder loginFormUiBinder = GWT.create(LoginFormUiBinder.class);
+    interface LoginFormUiBinder extends UiBinder<HorizontalPanel, LoginForm> {  }
+    private static LoginFormUiBinder uiBinder = GWT.create(LoginFormUiBinder.class);
 
     private Constants constants = GWT.create(Constants.class);
     private Widget root;
@@ -43,11 +43,8 @@ public class LoginForm extends PopupPanel {
 
     private HelloServiceAsync helloService = GWT.create(HelloService.class);
 
-
     public LoginForm() {
-        //initWidget(loginFormUiBinder.createAndBindUi(this));
-
-        this.root = loginFormUiBinder.createAndBindUi(this);
+        this.root = uiBinder.createAndBindUi(this);
         add(this.root);
     }
 
