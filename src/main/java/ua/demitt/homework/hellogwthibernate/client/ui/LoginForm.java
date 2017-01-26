@@ -2,6 +2,8 @@ package ua.demitt.homework.hellogwthibernate.client.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.logging.client.ConsoleLogHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -37,6 +39,7 @@ public class LoginForm extends PopupPanel {
     private static Logger logger = Logger.getLogger("LoginFormLogger");
 
     private Widget root;
+    AsyncCallback callback;
 
     @UiField //(provided = true)
     Button loginButton;
@@ -49,14 +52,36 @@ public class LoginForm extends PopupPanel {
     public LoginForm() {
         this.root = uiBinder.createAndBindUi(this);
         add(this.root);
+        createAsyncCallback();
         logger.addHandler(new ConsoleLogHandler());
         logger.log(Level.INFO, "Login form was loaded");
     }
 
     @UiHandler("loginButton")
-    @SuppressWarnings("unchecked")
     void submitLoginForm(ClickEvent event) {
-        AsyncCallback callback = new AsyncCallback() {
+        logger.log(Level.INFO, "Login button was pressed");
+        doLogin();
+    }
+
+    @UiHandler({"login", "password"})
+    void pressEnter(KeyDownEvent event) {
+        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+            logger.log(Level.INFO, "Enter key was pressed");
+            doLogin();
+        }
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private void doLogin() {
+        String login = this.login.getText();
+        String password = this.password.getText();
+        logger.log(Level.INFO, "Login = " + login + ", password = " + password);
+        this.helloService.login(login, password, this.callback);
+    }
+
+    private void createAsyncCallback() {
+        this.callback = new AsyncCallback() {
             @Override
             public void onSuccess(Object o) {
                 Response response = (Response) o;
@@ -79,13 +104,7 @@ public class LoginForm extends PopupPanel {
                 Window.alert(constants.loginRequestError());
             }
         };
-
-        String login = this.login.getText();
-        String password = this.password.getText();
-        logger.log(Level.INFO, "Login button was pressed: login = " + login + ", password = " + password);
-        this.helloService.login(login, password, callback);
     }
-
 
     private void clearFields() {
         login.setText("");
