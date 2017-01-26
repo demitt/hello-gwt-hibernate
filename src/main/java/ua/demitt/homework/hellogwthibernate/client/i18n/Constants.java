@@ -5,6 +5,7 @@ public interface Constants extends com.google.gwt.i18n.client.Constants {
     String loginUser();
     String loginPassword();
     String loginButton();
+    String loginRequestError();
 
     String greetingMorning();
     String greetingDay();

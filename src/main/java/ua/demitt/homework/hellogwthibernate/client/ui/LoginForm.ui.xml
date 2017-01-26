@@ -5,22 +5,22 @@
     <g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_CENTER">
         <g:HorizontalPanel>
             <g:cell>
-                <g:VerticalPanel width="130">
-                    <g:HTML height="30">
-                        <ui:text from="{i18n.loginUser}"/>
+                <g:VerticalPanel width="130px">
+                    <g:HTML height="30px">
+                        <ui:text from="{i18n.loginUser}:"/>
                     </g:HTML>
                     <g:HTML>
-                        <ui:text from="{i18n.loginPassword}"/>
+                        <ui:text from="{i18n.loginPassword}:"/>
                     </g:HTML>
                 </g:VerticalPanel>
             </g:cell>
 
             <g:cell>
                 <g:VerticalPanel>
-                    <g:cell height="30">
+                    <g:cell height="30px">
                         <g:TextBox ui:field="login"/>
                     </g:cell>
-                    <g:cell height="30">
+                    <g:cell height="30px">
                         <g:PasswordTextBox ui:field="password" />
                     </g:cell>
                     <g:cell>

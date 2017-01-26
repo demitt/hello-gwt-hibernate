@@ -19,11 +19,8 @@ import ua.demitt.homework.hellogwthibernate.client.HelloService;
 import ua.demitt.homework.hellogwthibernate.client.HelloServiceAsync;
 import ua.demitt.homework.hellogwthibernate.client.i18n.Constants;
 import ua.demitt.homework.hellogwthibernate.shared.Const;
-import ua.demitt.homework.hellogwthibernate.client.Period;
 import ua.demitt.homework.hellogwthibernate.shared.response.Response;
 import ua.demitt.homework.hellogwthibernate.shared.response.ResponseCode;
-
-import java.util.Date;
 
 public class LoginForm extends PopupPanel {
 
@@ -32,6 +29,7 @@ public class LoginForm extends PopupPanel {
     private static LoginFormUiBinder uiBinder = GWT.create(LoginFormUiBinder.class);
 
     private Constants constants = GWT.create(Constants.class);
+
     private Widget root;
 
     @UiField //(provided = true)
@@ -49,6 +47,7 @@ public class LoginForm extends PopupPanel {
     }
 
     @UiHandler("loginButton")
+    @SuppressWarnings("unchecked")
     void submitLoginForm(ClickEvent event) {
         AsyncCallback callback = new AsyncCallback() {
             @Override
@@ -59,10 +58,7 @@ public class LoginForm extends PopupPanel {
                     return;
                 }
 
-                Period period = Period.getPeriod(new Date().getHours());
-                String greeting = createGreeting(response.getUserName(), period);
-
-                GeneralPage generalPage = new GeneralPage(greeting, root);
+                GeneralPage generalPage = new GeneralPage(response.getUserName(), root);
                 RootPanel content = RootPanel.get(Const.CONTENT_ID);
                 content.clear();
                 content.add(generalPage);
@@ -70,7 +66,7 @@ public class LoginForm extends PopupPanel {
 
             @Override
             public void onFailure(Throwable throwable) {
-                Window.alert("Error!");
+                Window.alert(constants.loginRequestError());
             }
         };
 
@@ -83,27 +79,5 @@ public class LoginForm extends PopupPanel {
     private void clearFields() {
         login.setText("");
         password.setText("");
-    }
-
-    private String createGreeting(String userName, Period period) {
-        String greeting;
-        switch (period) {
-            case MORNING:
-                greeting = constants.greetingMorning();
-                break;
-            case DAY:
-                greeting = constants.greetingDay();
-                break;
-            case EVENING:
-                greeting = constants.greetingEvening();
-                break;
-            case NIGHT:
-                greeting = constants.greetingNight();
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown period");
-        }
-        greeting += ", " + userName + "!";
-        return greeting;
     }
 }
