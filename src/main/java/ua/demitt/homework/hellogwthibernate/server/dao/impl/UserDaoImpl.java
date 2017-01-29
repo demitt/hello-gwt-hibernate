@@ -1,9 +1,9 @@
 package ua.demitt.homework.hellogwthibernate.server.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.demitt.homework.hellogwthibernate.server.dao.UserDao;
 import ua.demitt.homework.hellogwthibernate.server.dao.entity.User;
 import ua.demitt.homework.hellogwthibernate.server.util.HibernateUtil;
@@ -13,17 +13,17 @@ import static ua.demitt.homework.hellogwthibernate.server.util.EntityDtoConverte
 
 public class UserDaoImpl implements UserDao {
 
-    private static final Logger logger = LoggerFactory.getLogger("UserDaoLogger");
+    private static final Logger serverLogger = LogManager.getLogger(UserDaoImpl.class);
     private static SessionFactory sessionFactory;
 
     public UserDaoImpl() {
-        //logger.info("Was loaded");
+        serverLogger.info("Was loaded");
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
     @Override
     public UserDto findUser(String login) {
-        logger.info("Starts. Find login \"" + login + "\"");  // <<< UNCOMMENTED
+        serverLogger.info("Starts. Find login \"" + login + "\"");
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         User user = (User) session.createQuery("select u from User u where u.login = :login").
@@ -31,7 +31,7 @@ public class UserDaoImpl implements UserDao {
             uniqueResult();
         UserDto userDto = convert(user);
 
-        //logger.info("Search result: " + (user== null ? "no user" : "user present") );
+        serverLogger.info("Search result: " + (user== null ? "no user" : "user present") );
         /*//Test
         long count = (long) session.createQuery("select count(u) from User u").
             uniqueResult();
