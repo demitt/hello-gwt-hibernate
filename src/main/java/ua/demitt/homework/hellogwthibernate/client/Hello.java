@@ -17,24 +17,9 @@ public class Hello implements EntryPoint {
     public void onModuleLoad() {
         logger.addHandler(new ConsoleLogHandler());
         logger.log(Level.INFO, "Hello-module was loaded");
-        //Label theGreeting = new Label("Hello World!");
-        //Button helloButton = new Button("БесполезнаяКнопка");
 
         LoginForm loginForm = new LoginForm();
 
-        /*HorizontalPanel horizontalPanel = new HorizontalPanel();
-        horizontalPanel.setBorderWidth(1);
-        horizontalPanel.add(theGreeting);
-        horizontalPanel.add(helloButton);*/
-
-        //RootPanel.get("content").add(horizontalPanel);
         RootPanel.get(Const.CONTENT_ID).add(loginForm);
-        //setUpGui();
     }
-
-
-    /*private void setUpGui() {
-
-    }*/
-
 }

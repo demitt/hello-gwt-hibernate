@@ -41,7 +41,7 @@ public class LoginForm extends PopupPanel {
     private Widget root;
     AsyncCallback callback;
 
-    @UiField //(provided = true)
+    @UiField
     Button loginButton;
     @UiField
     TextBox login;

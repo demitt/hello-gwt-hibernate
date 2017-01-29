@@ -24,6 +24,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserDto findUser(String login) {
         serverLogger.info("Starts. Find login \"" + login + "\"");
+
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         User user = (User) session.createQuery("select u from User u where u.login = :login").
@@ -32,12 +33,6 @@ public class UserDaoImpl implements UserDao {
         UserDto userDto = convert(user);
 
         serverLogger.info("Search result: " + (user== null ? "no user" : "user present") );
-        /*//Test
-        long count = (long) session.createQuery("select count(u) from User u").
-            uniqueResult();
-        UserDto userDto = new UserDto();
-        userDto.setLogin(String.valueOf(count));
-        userDto.setPassword("pass");*/
 
         session.getTransaction().commit();
         return userDto;

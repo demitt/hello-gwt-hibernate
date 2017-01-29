@@ -4,20 +4,20 @@
 
     <inherits name="com.google.gwt.user.User" />
     <inherits name="com.google.gwt.i18n.I18N" />
-    <!--<inherits name="com.google.gwt.uibinder.UiBinder"/>-->
+    <inherits name="com.google.gwt.logging.Logging" />
 
+    <!-- Main -->
     <entry-point class="ua.demitt.homework.hellogwthibernate.client.Hello"/>
-
     <source path='client' />
     <source path='shared' />
 
+    <!-- i18n -->
     <set-configuration-property name="locale.useragent" value="Y"/>
     <extend-property name="locale" values="en"/>
     <extend-property name="locale" values="uk"/>
     <extend-property name="locale" values="ru"/>
-    <!--<set-property-fallback name="locale" value="en"/>-->
 
-    <inherits name="com.google.gwt.logging.Logging" />
+    <!-- Logging -->
     <set-property name="gwt.logging.logLevel" value="INFO" />
     <set-property name="gwt.logging.enabled" value="TRUE" />
     <set-property name="gwt.logging.consoleHandler" value="DISABLED" />

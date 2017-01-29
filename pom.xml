@@ -8,7 +8,7 @@
   <groupId>ua.demitt.homework</groupId>
   <artifactId>hello-gwt-hibernate</artifactId>
   <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>HelloGwtHibernate</name>
 
   <properties>
@@ -16,6 +16,7 @@
     <!-- Main -->
     <maven-compiler-source>1.8</maven-compiler-source>
     <maven-compiler-target>1.8</maven-compiler-target>
+    <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
     <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
     <project-build.sourceEncoding>UTF-8</project-build.sourceEncoding>
 
@@ -25,10 +26,7 @@
 
     <xml-apis.version>1.4.01</xml-apis.version>
 
-    <!-- Spring -->
-    <!--<spring.version>4.2.6.RELEASE</spring.version>-->
-
-    <!-- ORM and database -->
+    <!-- ORM and DB -->
     <hibernate.version>5.0.7.Final</hibernate.version> <!-- 4.3.10.Final   5.0.7.Final-->
     <h2database.version>1.4.189</h2database.version>
 
@@ -69,59 +67,6 @@
       <version>${gwt.version}</version>
       <scope>provided</scope>
     </dependency>
-
-    <!-- Spring -->
-
-    <!--
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context-support</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <version>${spring.version}</version>
-      <scope>test</scope>
-    </dependency>
-    -->
 
     <!--Hibernate-->
 
@@ -195,11 +140,8 @@
 
   <build>
     <finalName>helloGwtHibernate</finalName>
-    <!-- Output classes directly into the webapp, so that IDEs and "mvn process-classes" update them in DevMode -->
-    <!--<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>-->
 
     <plugins>
-      <!-- Mojo's Maven Plugin for GWT -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
@@ -213,8 +155,6 @@
             </goals>
           </execution>
         </executions>
-        <!-- Plugin configuration. There are many available options, see 
-          gwt-maven-plugin documentation at codehaus.org -->
         <configuration>
           <encoding>${project-build.sourceEncoding}</encoding>
           <runTarget>Hello.html</runTarget>
@@ -235,7 +175,14 @@
         </configuration>
       </plugin>
 
-      <!-- TODO: add maven-resources-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>${maven-resources-plugin.version}</version>
+        <configuration>
+          <encoding>${project-build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

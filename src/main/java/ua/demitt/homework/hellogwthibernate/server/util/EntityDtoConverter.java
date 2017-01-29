@@ -16,7 +16,6 @@ public class EntityDtoConverter {
         userDto.setLogin(user.getLogin());
         userDto.setPassword(user.getPassword());
         userDto.setName(user.getName());
-        //TODO: maybe separated salt field
         return userDto;
     }
 
