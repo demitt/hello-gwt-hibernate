@@ -27,7 +27,7 @@
     <xml-apis.version>1.4.01</xml-apis.version>
 
     <!-- ORM and DB -->
-    <hibernate.version>5.0.7.Final</hibernate.version> <!-- 4.3.10.Final   5.0.7.Final-->
+    <hibernate.version>5.0.7.Final</hibernate.version>
     <h2database.version>1.4.189</h2database.version>
 
     <!-- Logging -->

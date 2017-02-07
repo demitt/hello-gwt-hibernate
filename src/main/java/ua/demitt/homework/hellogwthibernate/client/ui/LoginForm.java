@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
 import ua.demitt.homework.hellogwthibernate.client.HelloService;
 import ua.demitt.homework.hellogwthibernate.client.HelloServiceAsync;
 import ua.demitt.homework.hellogwthibernate.client.i18n.Constants;
-import ua.demitt.homework.hellogwthibernate.shared.Const;
+import ua.demitt.homework.hellogwthibernate.client.model.Const;
 import ua.demitt.homework.hellogwthibernate.shared.response.Response;
 import ua.demitt.homework.hellogwthibernate.shared.response.ResponseCode;
 
@@ -35,11 +35,11 @@ public class LoginForm extends PopupPanel {
     private static LoginFormUiBinder uiBinder = GWT.create(LoginFormUiBinder.class);
 
     private Constants constants = GWT.create(Constants.class);
-    private HelloServiceAsync helloService = GWT.create(HelloService.class);
+    private HelloServiceAsync helloService = HelloService.Util.getHelloService();
     private static Logger logger = Logger.getLogger("LoginFormLogger");
 
     private Widget root;
-    AsyncCallback callback;
+    AsyncCallback<Response> callback;
 
     @UiField
     Button loginButton;
@@ -52,10 +52,12 @@ public class LoginForm extends PopupPanel {
     public LoginForm() {
         this.root = uiBinder.createAndBindUi(this);
         add(this.root);
-        createAsyncCallback();
         logger.addHandler(new ConsoleLogHandler());
         logger.log(Level.INFO, "Login form was loaded");
+        doSilentLogin();
+        createAsyncCallback();
     }
+
 
     @UiHandler("loginButton")
     void submitLoginForm(ClickEvent event) {
@@ -72,7 +74,27 @@ public class LoginForm extends PopupPanel {
     }
 
 
-    @SuppressWarnings("unchecked")
+    private void doSilentLogin() {
+        logger.log(Level.INFO, "Session checking");
+
+        this.helloService.silentLogin(
+            new AsyncCallback<Response>() {
+                @Override
+                public void onSuccess(Response response) {
+                    if (response.getCode() == ResponseCode.USER_NOT_FOUND) {
+                        logger.log(Level.INFO, "User was not found");
+                        return;
+                    }
+                    logger.log(Level.INFO, "Session checking successful, user was found");
+                    goToGeneralPage(response.getUserName());
+                }
+
+                @Override
+                public void onFailure(Throwable throwable) { }
+            }
+        );
+    }
+
     private void doLogin() {
         String login = this.login.getText();
         String password = this.password.getText();
@@ -81,10 +103,9 @@ public class LoginForm extends PopupPanel {
     }
 
     private void createAsyncCallback() {
-        this.callback = new AsyncCallback() {
+        this.callback = new AsyncCallback<Response>() {
             @Override
-            public void onSuccess(Object o) {
-                Response response = (Response) o;
+            public void onSuccess(Response response) {
                 clearFields();
                 if (response.getCode() == ResponseCode.USER_NOT_FOUND) {
                     logger.log(Level.INFO, "User was not found");
@@ -92,11 +113,7 @@ public class LoginForm extends PopupPanel {
                 }
 
                 logger.log(Level.INFO, "User was found");
-
-                GeneralPage generalPage = new GeneralPage(response.getUserName(), root);
-                RootPanel content = RootPanel.get(Const.CONTENT_ID);
-                content.clear();
-                content.add(generalPage);
+                goToGeneralPage(response.getUserName());
             }
 
             @Override
@@ -110,5 +127,13 @@ public class LoginForm extends PopupPanel {
         login.setText("");
         password.setText("");
         logger.log(Level.INFO, "Login form's fields was cleared");
+    }
+
+    private void goToGeneralPage(String userName) {
+        logger.log(Level.INFO, "We are going to go to general page");
+        GeneralPage generalPage = new GeneralPage(userName, root);
+        RootPanel content = RootPanel.get(Const.CONTENT_ID);
+        content.clear();
+        content.add(generalPage);
     }
 }

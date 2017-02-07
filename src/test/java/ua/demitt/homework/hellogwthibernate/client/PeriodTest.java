@@ -1,6 +1,7 @@
 package ua.demitt.homework.hellogwthibernate.client;
 
 import org.junit.Test;
+import ua.demitt.homework.hellogwthibernate.client.model.Period;
 
 import java.util.ArrayList;
 import java.util.Arrays;

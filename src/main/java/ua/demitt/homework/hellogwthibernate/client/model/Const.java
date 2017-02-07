@@ -1,4 +1,4 @@
-package ua.demitt.homework.hellogwthibernate.shared;
+package ua.demitt.homework.hellogwthibernate.client.model;
 
 public class Const {
     public static final String CONTENT_ID = "content";

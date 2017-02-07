@@ -21,7 +21,6 @@ public class Response implements Serializable {
         return code;
     }
 
-
     public String getUserName() {
         return userName;
     }

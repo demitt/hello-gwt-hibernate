@@ -8,8 +8,9 @@ import ua.demitt.homework.hellogwthibernate.shared.dto.UserDto;
 import ua.demitt.homework.hellogwthibernate.shared.response.Response;
 import ua.demitt.homework.hellogwthibernate.shared.response.ResponseCode;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class HelloServiceImplTest {
 
@@ -55,10 +56,12 @@ public class HelloServiceImplTest {
     @Test
     public void testLogin() throws Exception {
         //Given
+        Integer id = 1;
         String existentLogin = "first";
         String password = "secret";
         String passwordHash = "$2a$10$C4wCQNiA0ac4uFvpa8UahujzAh16Eeg45zLcIwOP36R70TnNG6FUu";
         UserDto userDto = new UserDto();
+        userDto.setId(id);
         userDto.setPassword(passwordHash);
 
         UserDao userDao = mock(UserDao.class);

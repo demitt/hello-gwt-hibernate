@@ -32,7 +32,22 @@ public class UserDaoImpl implements UserDao {
             uniqueResult();
         UserDto userDto = convert(user);
 
-        serverLogger.info("Search result: " + (user== null ? "no user" : "user present") );
+        serverLogger.info("Search result: " + (user == null ? "no user" : "user present") );
+
+        session.getTransaction().commit();
+        return userDto;
+    }
+
+    @Override
+    public UserDto findUser(Integer id) {
+        serverLogger.info("Starts. Find id \"" + id + "\"");
+
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        User user = session.get(User.class, id);
+        UserDto userDto = convert(user);
+
+        serverLogger.info("Search result: " + (user == null ? "no user" : "user present") );
 
         session.getTransaction().commit();
         return userDto;

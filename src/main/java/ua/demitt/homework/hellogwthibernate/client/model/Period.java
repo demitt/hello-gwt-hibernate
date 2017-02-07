@@ -1,4 +1,4 @@
-package ua.demitt.homework.hellogwthibernate.client;
+package ua.demitt.homework.hellogwthibernate.client.model;
 
 import java.util.Arrays;
 import java.util.List;
